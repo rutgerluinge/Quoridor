@@ -138,7 +138,6 @@ class GraphState:
             goal,
         ) in zip(self.player_pos, self.goal_y):
             if not can_reach_goal_row(start=(pos[0], pos[1]), goal_row=goal):
-                print("would be blocking move")
                 return True
         return False
 
