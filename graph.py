@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import Tuple, Dict, List
 from colorama import Fore
 import numpy as np
-from copy import copy, deepcopy
+from copy import deepcopy
 from collections import deque
 from action import ActionSpace, WallAction
 from config import Config

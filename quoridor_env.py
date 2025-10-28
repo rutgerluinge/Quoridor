@@ -1,6 +1,5 @@
 import time
 from typing import List
-import numpy as np
 from config import Config
 from graph import GraphState
 from action import (
