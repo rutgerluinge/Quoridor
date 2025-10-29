@@ -76,6 +76,9 @@ class QuoridorEnv:
             )
             blocked_moves.append(jump_move)
 
+        # This if statement makes it such that diagonal moves are only possible if jump is not possible
+        if blocked_moves:
+            return blocked_moves
         # Diagonal moves
         diagonal_dys = [-1, 1] if dx else []
         diagonal_dxs = [-1, 1] if dy else []
@@ -132,7 +135,9 @@ class QuoridorEnv:
             self._execute_wall_action(action=action)
 
     def game_loop(self, player_1: QuoridorBot, player_2: QuoridorBot):
-        time.sleep(0.5)
+        """Simple game loop, giving 2 bots"""
+        self.state.draw_board()
+        time.sleep(2)
         while self.running:
 
             # Player 1

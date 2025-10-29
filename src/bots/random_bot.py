@@ -10,5 +10,4 @@ class RandomBot(QuoridorBot):
         super().__init__(player_id)
 
     def select_move(self, state: GraphState, legal_actions: List[Action]) -> Action:
-
         return random.choice(legal_actions)
