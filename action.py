@@ -53,8 +53,8 @@ class BlockedPlayerAction(Action):
 
 @dataclass
 class WallAction(Action):
-    edge1: List[Tuple[int], Tuple[int]]
-    edge2: List[Tuple[int], Tuple[int]]
+    edge1: List[Tuple[int]]
+    edge2: List[Tuple[int]]
 
     def __post_init__(self):
         # Automatically set the name based on the wall’s unique string ID
