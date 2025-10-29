@@ -174,10 +174,14 @@ class GraphState:
                 idx += 1
 
         return wall_moves
+    
+    def clear_terminal(self):
+        """Method to clear the terminal"""
+        print("\033[H\033[J", end="")  # to sort of seem like redraw!
 
     def print_state(self):
         """Method to print the state to the terminal in a very nice way ;) if you are ambigious, create an UI PR!"""
-        print("\033[H\033[J", end="")  # to sort of seem like redraw!
+        self.clear_terminal()
 
         # Helpers for plotting selecting and coloring the bars
         def _print_horizontal_bars(r_idx):
