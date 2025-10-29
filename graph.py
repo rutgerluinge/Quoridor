@@ -179,7 +179,7 @@ class GraphState:
         """Method to clear the terminal"""
         print("\033[H\033[J", end="")  # to sort of seem like redraw!
 
-    def print_state(self):
+    def draw(self):
         """Method to print the state to the terminal in a very nice way ;) if you are ambigious, create an UI PR!"""
         self.clear_terminal()
 

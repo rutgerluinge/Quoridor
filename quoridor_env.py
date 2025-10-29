@@ -89,7 +89,7 @@ class QuoridorEnv:
             actions: List[Action] = self.get_all_legal_actions()
             p1_action: Action = random.choice(actions)  # random for now
             self.use_action(p1_action)
-            self.graph_state.print_state()
+            self.graph_state.draw()
 
             if self.check_win():
                 break
@@ -102,7 +102,7 @@ class QuoridorEnv:
             actions: List[Action] = self.get_all_legal_actions()
             p2_action: Action = random.choice(actions)  # random for now
             self.use_action(p2_action)
-            self.graph_state.print_state()
+            self.graph_state.draw()
             if self.check_win():
                 break
             time.sleep(2)
