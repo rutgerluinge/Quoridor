@@ -135,7 +135,9 @@ class QuoridorEnv:
             self._execute_wall_action(action=action)
 
     def game_loop(self, player_1: QuoridorBot, player_2: QuoridorBot):
-        time.sleep(0.5)
+        """Simple game loop, giving 2 bots"""
+        self.state.draw_board()
+        time.sleep(2)
         while self.running:
 
             # Player 1
