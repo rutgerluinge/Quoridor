@@ -1,13 +1,17 @@
 from dataclasses import dataclass
-from typing import List, Optional, Tuple
 
-from config import Config, Pos
+from configs import Config, Pos
 
 
+@dataclass
 class ActionSpace:
+    """
+    Dataclass to store some information about the different actions + action space idx (if you need it for some reason)
+    """
+
     s = Config()
     player_movement = {"up": (-1, 0), "right": (0, 1), "left": (0, -1), "down": (1, 0)}
-    blocked_movement_idx_start = len(player_movement) - 1
+    blocked_movement_idx_start = len(player_movement)
     blocked_movement = {
         "jump_up": (-2, 0),
         "jump_down": (2, 0),
@@ -33,6 +37,8 @@ class ActionSpace:
     )
 
 
+# ---------- Action dataclasses ----------
+# three types of actions: MovementAction, BlockedMovementAction, WallAction
 @dataclass
 class Action:
     name: str
@@ -40,13 +46,13 @@ class Action:
 
 
 @dataclass
-class PlayerAction(Action):
+class MovementAction(Action):
     dx: int
     dy: int
 
 
 @dataclass
-class BlockedPlayerAction(Action):
+class BlockedMovementAction(Action):
     dx: int
     dy: int
 
