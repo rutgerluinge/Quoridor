@@ -1,8 +1,17 @@
-# Quoridor Bot Tournament
+# Researchable Quoridor Bot Tournament
 
-Welcome! 👋
+What makes a person at Researchable a Researchable-er you ask?
+To me that is:
 
-This repository lets you play Quoridor and run a friendly—yet fiercely competitive—bot tournament with your colleagues. Build a bot, battle everyone else, and claim eternal office glory.
+- Games
+- Coding
+- Overcomplicating the simple stuff
+- Friendly competition
+- Fun
+
+Therefore we will try and see who is the best bot maker! Within this readme I will go over the game rules, but also explain how to setup, the rules, what to hand in etc.
+
+Have fun!
 
 ---
 
@@ -11,23 +20,28 @@ This repository lets you play Quoridor and run a friendly—yet fiercely competi
 ### 1) Set up a Python environment
 
 ```bash
-# (recommended) create and activate a virtual environment
-python -m venv .venv
+# (recommended) create and activate a virtual environment, I will be running on python 3.13 with the requirements, with minor issues I will contact you so dont worry too much, but plss no crazy stuff!
+python3.13 -m venv .venv
 # Windows: .venv\Scripts\activate
 # macOS/Linux:
 source .venv/bin/activate
 
-# install dependencies
+pip install --upgrade pip
+
+# install dependencies (request for a different package is allowed but try to stay as python pure as possible)
 pip install -r requirements.txt
 ```
 
 ### 2) Run the game
-
+You can use this for your own testing!
 ```bash
 python src/main.py
 ```
+or run the tournament (how i will run it after placing all your submitted folders)
 
-> This should launch/drive the game using the code in `src/`.
+```bash
+python src/tournament.py
+```
 
 ---
 
@@ -42,6 +56,7 @@ Quoridor is a two-player abstract strategy game on a 9×9 board. Each player sta
 - **Walls**:
   - Walls occupy two edges between squares (they’re placed between cells, horizontally or vertically).
   - Walls **cannot** overlap, cross illegally, or be placed off-grid.
+  - Walls are a resource, you only have 10!
   - **Important**: A wall may not **fully block** all possible paths; both players must always have at least one legal path to their goal row.
 - **Movement constraints**:
   - You cannot move through walls.
@@ -49,35 +64,35 @@ Quoridor is a two-player abstract strategy game on a 9×9 board. Each player sta
   - If a jump straight ahead is blocked by a wall, you can move **diagonally** around the opponent (if legal per implementation).
 - **Starting resources**: Typically, each player starts with **10 walls**. (If your implementation differs, see your config in `src/`.)
 
-> Note: Exact edge cases (diagonal jump rules, wall count, etc.) follow the rules implemented in this codebase. When in doubt, rely on the engine’s legality checks.
+For a visual overview and full rules, I would advise the internet (or an llm if you dont like rule books): [Quoridor — Rulebook](https://cdn.1j1ju.com/medias/fe/36/08-quoridor-rulebook.pdf)
 
 ---
 
 ## Tournament Rules
 
-You and your colleagues will each submit a single bot by extending the base class in `src/bots/bot.py`.
+You and your colleagues will each submit a single bot by extending the base class in `src/bots/bot_template.py`.
 
 - **One file only**: Submit a single Python file containing your bot class: `class MyBot(Bot): ...`
 - **Where to inherit from**: `src/bots/bot.py` defines the abstract `Bot` API. Implement the required abstract methods for your bot to run.
-- **Required speed**: Your bot’s core decision method (`select_move(...)`) **must complete within 10 seconds** per move on the organizer’s Lenovo ThinkPad.
+- **Required speed**: Your bot’s core decision method (`select_move(...)`) **must complete within 1 seconds** (on my machine lol) I might change this if i see that it is a problem.
 - **Do not modify the engine**: You may only edit your own bot file. Engine/runner changes are not allowed for submissions.
 - **Tournament format**:
   - **Round-robin**: Each bot plays every other bot multiple times.
-  - **Number of games**: **20 games per pairing** — recommended split: **10 as first player, 10 as second** to balance turn order.
-  - **Scoring**: Win = 1, Loss = 0. (Draws, if any exist in the engine, count as 0.5.)
-  - **Winner**: The bot with the **highest win percentage** across all its games is crowned the winner.
-  - **Ties**: If there is a tie in win percentage, resolve with (in order):
-    1. Head‑to‑head record among tied bots
-    2. Sonneborn–Berger (sum of beaten opponents’ scores) or simple strength-of-schedule, depending on the organizer’s preference
-    3. If still tied, a 10‑game playoff per pairing (balanced colors)
+  - **Number of games**: **100 games per pairing**
+  - **Scoring**: Win = 1, Loss = 0. (Draws, if any exist in the engine, count as 0.5 (for example max number of turns (config)))
+  - **Winner**: The bot with the **highest win percentage** across all its games is crowned the winner. (maybe live final?)
 
-> The organizer will run the tournament; make sure your bot file imports cleanly with no extra installation steps beyond `requirements.txt`.
+ I will run the tournament: make sure your bot file imports cleanly with no extra installation steps beyond `requirements.txt`.
 
 ---
 
 ## Implementing Your Bot
 
-Create a new Python file (or copy a template) for your bot and inherit from `QuoridorBot`:
+### Step-by-Step Guide
+
+**Step 1:** Create a folder in `src/bots/` named after yourself or your bot.
+
+**Step 2:** Create a new Python file named `bot.py` in your folder and inherit from `QuoridorBot`:
 
 ```python
 class QuoridorBot(ABC):
@@ -88,42 +103,42 @@ class QuoridorBot(ABC):
     def __init__(self, player_id: int):
         self.player_id = player_id
 
+    @staticmethod
+    @abstractmethod
+    def __str__() -> str:
+        """Use an original name!"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def reset(self) -> None:
+        """Reset any internal state between games, if needed. This gets called instead of creating a new bot instance, such that you could use tactics for countering your opponents playstyle"""
+        pass
+
     @abstractmethod
     def select_move(self, state: GraphState, legal_actions: List[Action]) -> Action:
-        """Subclasses must implement this."""
+        """Main logic of your quoridor bot"""
         raise NotImplementedError
+
 ```
 
-**Important notes**
+This file needs to be in its own folder in `src/bots/your_folder_name/`
+In this folder you are allowed to add additional files, just dont do sketchy stuff or too many work arounds we are trying to keep it low key. Preferably keep it within your bot python script, and maybe a trained model if you actually took the time to try that out lol.
 
-- Your file can be any length; performance is what matters.
-- Don’t spawn external processes or require extra packages beyond `requirements.txt`.
-- No or minimal logs.
+## Note:
+If your call of select_move times out, throws an illegal move (not in legal_actions) or just makes a mistake, you automatically lose the game, make sure that doesn't happen!
 
----
+I added a derpy example in **`src/bots/wall_place_bot`**  such that you can see an example
 
-<!-- ## Running Matches & Tournaments
-
-The exact command may vary depending on how the organizer wired the CLI in `src/`. If not provided, a typical pattern is:
-
-```bash
-# to pit two bots against each other
-python src/main.py --bot-a path/to/BotA.py --bot-b path/to/BotB.py --games 20
-
-# to run a full round-robin over a folder of bots
-python src/main.py --bots-folder bots_submissions/ --games-per-pair 20
-```
-
-> If your `main.py` uses different flags, check its `--help` message or the code. -->
 
 ## Submission Checklist
 
-- `class MyBot(Bot)` defined in a **single Python file**.
-- All required abstract methods implemented (notably `select_move(...)`).
-- No edits outside your bot file.
-- Runs with `pip install -r requirements.txt` on a clean machine.
-- `select_move(...)` stays **under 10 seconds** per move.
+- I created a folder with the name of **myself** or my **genius bot**
+- I added a python file with the name: **`bot.py`** in this folder
+- I inherited **`bot.py`** from the **`QuordiorBot`** abstract class in **`template_bot.py`**
+- I can add files in my folder that my bot uses, but this is certainly not necessary
 
-## License / Credits
+## Issues
 
-Created by Rutger Luinge
+Might there be any problems, please let me know or PR, I probably overlooked some logic or something.
+
+If you have any suggestions or remarks for the format please let me know!

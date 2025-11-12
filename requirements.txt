@@ -1,1 +1,12 @@
-colorama
+colorama==0.4.6
+numpy==2.3.4
+pandas==2.3.3
+
+# I will allow the packages below, if you have a different request let me know!
+# matplotlib==3.10.7
+
+# torch==2.9.1
+# tensorflow==2.20.0
+
+# gymnasium==1.2.2
+
