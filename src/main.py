@@ -1,4 +1,4 @@
-from bots.wall_place_bot.wall_place_bot import WallPlaceBot
+from bots.wall_place_bot.bot import WallPlaceBot
 from quoridor_env import QuoridorEnv
 
 
