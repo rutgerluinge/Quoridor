@@ -1,9 +1,9 @@
 from dataclasses import dataclass, field
 from typing import List, Dict, Set
-from colorama import Fore
-from collections import deque
-
 from action import ActionSpace, WallAction
+from collections import deque
+from colorama import Fore
+
 from configs import Config, Graph, Pos
 
 

@@ -7,7 +7,7 @@ import random
 
 from configs import Graph, Pos
 from graph_state import GraphState
-from bots.template_bot import QuoridorBot
+from bots.quoridor_bot import QuoridorBot
 from action import Action, MovementAction, BlockedMovementAction
 
 
@@ -64,11 +64,13 @@ class WalkBot(QuoridorBot):
                 queue.append(nbr)
 
         # In a valid game state this should never happen.
-        raise AssertionError("Unreachable goal: game logic/state is inconsistent. walk_bot")
-
+        raise AssertionError(
+            "Unreachable goal: game logic/state is inconsistent. walk_bot"
+        )
 
     def reset(self):
         return super().reset()
+
     # ---------- Policy ----------
 
     def select_move(self, state: GraphState, legal_actions: List[Action]) -> Action:

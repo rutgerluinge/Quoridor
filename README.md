@@ -32,11 +32,22 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+If you have warnings from vscode on imports, you can set:
+
+```
+  "python.analysis.extraPaths": ["src"]
+```
+
+in your `.vscode/settings.json` (you might have to create this file).
+
 ### 2) Run the game
+
 You can use this for your own testing!
+
 ```bash
 python src/main.py
 ```
+
 or run the tournament (how i will run it after placing all your submitted folders)
 
 ```bash
@@ -73,7 +84,7 @@ For a visual overview and full rules, I would advise the internet (or an llm if 
 You and your colleagues will each submit a single bot by extending the base class in `src/bots/bot_template.py`.
 
 - **One file only**: Submit a single Python file containing your bot class: `class MyBot(Bot): ...`
-- **Where to inherit from**: `src/bots/bot.py` defines the abstract `Bot` API. Implement the required abstract methods for your bot to run.
+- **Where to inherit from**: `src/bots/quoridor_bot.py` defines the abstract `Bot` API. Implement the required abstract methods for your bot to run.
 - **Required speed**: Your bot’s core decision method (`select_move(...)`) **must complete within 1 seconds** (on my machine lol) I might change this if i see that it is a problem.
 - **Do not modify the engine**: You may only edit your own bot file. Engine/runner changes are not allowed for submissions.
 - **Tournament format**:
@@ -82,7 +93,7 @@ You and your colleagues will each submit a single bot by extending the base clas
   - **Scoring**: Win = 1, Loss = 0. (Draws, if any exist in the engine, count as 0.5 (for example max number of turns (config)))
   - **Winner**: The bot with the **highest win percentage** across all its games is crowned the winner. (maybe live final?)
 
- I will run the tournament: make sure your bot file imports cleanly with no extra installation steps beyond `requirements.txt`.
+I will run the tournament: make sure your bot file imports cleanly with no extra installation steps beyond `requirements.txt`.
 
 ---
 
@@ -125,10 +136,10 @@ This file needs to be in its own folder in `src/bots/your_folder_name/`
 In this folder you are allowed to add additional files, just dont do sketchy stuff or too many work arounds we are trying to keep it low key. Preferably keep it within your bot python script, and maybe a trained model if you actually took the time to try that out lol.
 
 ## Note:
+
 If your call of select_move times out, throws an illegal move (not in legal_actions) or just makes a mistake, you automatically lose the game, make sure that doesn't happen!
 
-I added a derpy example in **`src/bots/wall_place_bot`**  such that you can see an example
-
+I added a derpy example in **`src/bots/wall_place_bot`** such that you can see an example
 
 ## Submission Checklist
 

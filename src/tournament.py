@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 
 from action import Action
-from bots.template_bot import QuoridorBot
+from bots.quoridor_bot import QuoridorBot
 from configs import TournamentConfig
 from quoridor_env import QuoridorEnv
 

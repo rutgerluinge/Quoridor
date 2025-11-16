@@ -1,7 +1,7 @@
 colorama==0.4.6
 numpy==2.3.4
 pandas==2.3.3
-
+networkx
 # I will allow the packages below, if you have a different request let me know!
 # matplotlib==3.10.7
 

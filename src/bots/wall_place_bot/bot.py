@@ -3,7 +3,7 @@ from math import inf
 from typing import Deque, Dict, List, Optional
 from configs import Graph, Pos
 from graph_state import GraphState
-from bots.template_bot import QuoridorBot
+from bots.quoridor_bot import QuoridorBot
 from action import Action, BlockedMovementAction, MovementAction, WallAction
 import random
 from copy import deepcopy
@@ -65,7 +65,9 @@ class WallPlaceBot(QuoridorBot):
         wall_acts = [a for a in legal_actions if isinstance(a, WallAction)]
         move_acts = [a for a in legal_actions if isinstance(a, MovementAction)]
         # You had this but didn't use it; keep if you need it elsewhere
-        blocked_move_acts = [a for a in legal_actions if isinstance(a, BlockedMovementAction)]
+        blocked_move_acts = [
+            a for a in legal_actions if isinstance(a, BlockedMovementAction)
+        ]
 
         own_pos, opp_pos = (
             state.player_pos[self.player_id],

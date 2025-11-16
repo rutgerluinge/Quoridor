@@ -4,7 +4,7 @@ from typing import List
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from copy import deepcopy
 
-from bots.template_bot import QuoridorBot
+from bots.quoridor_bot import QuoridorBot
 from configs import Config
 from graph_state import GraphState
 from action import (
